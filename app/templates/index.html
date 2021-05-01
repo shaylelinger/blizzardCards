@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>SRE Assignment</title>
+    <style>
+    img {
+      width: 70%;
+    }
+    table {
+        font-size: 25px;
+    }
+    h1 {
+        font-size: 250%;
+    }
+    </style>
+</head>
+<body>
+    <h1><center>Hearthstone Cards</center></h1>
+    <table>
+        {% for item in output %}
+            <tr>               
+                <td><img src={{ item.image }}></td>
+                <td><b>Name:</b> {{ item.name }}<br>
+                    <b>Rarity:</b> {{ item.rarity }}<br>
+                    <b>Set:</b> {{ item.cardSet }}<br>
+                    <b>Class:</b> {{ item.class }}</h2>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
