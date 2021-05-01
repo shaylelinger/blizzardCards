@@ -61,8 +61,11 @@ def processData(cardData, metadata):
 	# init output array
 	output = []
 
+	# card limit (default is 10 as required)
+	cardLimit = int(os.getenv('BLIZZARD_CARD_LIMIT'))
+
 	# populate output objects array with card data + metadata
-	for card in cardData['cards']:
+	for i, card in enumerate(cardData['cards']):
 		outputObject = {}
 
 		outputObject['image'] = card['image']
@@ -74,6 +77,9 @@ def processData(cardData, metadata):
 		outputObject['class'] = getCardMetadata(metadata['classes'], card['classId'])
 		
 		output.append(outputObject)
+
+		if cardLimit > 0 and cardLimit == i+1:
+			break
 
 	return output
 
