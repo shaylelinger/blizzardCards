@@ -13,15 +13,11 @@ def getCardMetadata(lookupData, lookupId):
 	return None
 
 def getAccessToken(clientId, clientSecret):
-	return
+	return os.environ['BLIZZARD_TEMP_API_ACCESS_TOKEN']
 
-# initialize flask
-app = Flask(__name__)
-
-@app.route("/")
-def index():
+def getData():
 	# add oauth flow
-	access_token = os.environ['BLIZZARD_TEMP_API_ACCESS_TOKEN']
+	access_token = getAccessToken(None, None)
 
 	# API data URLs
 	CARDS_URL = f'https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=druid%2Cwarlock&manaCost=7%2C8%2C9%2C10&rarity=legendary&sort=id%3Aasc&access_token={access_token}'
@@ -34,6 +30,9 @@ def index():
 	response = requests.get(METADATA_URL)
 	metadata = response.json()
 
+	return processData(cardData, metadata)
+
+def processData(cardData, metadata):
 	# init output array
 	output = []
 
@@ -50,8 +49,15 @@ def index():
 		outputObject['class'] = getCardMetadata(metadata['classes'], card['classId'])
 		
 		output.append(outputObject)
-	
-	return render_template('index.html', output=output)
+
+	return output
+
+# initialize flask
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+	return render_template('index.html', output=getData())
 
 # run app
 if __name__ == "__main__":
