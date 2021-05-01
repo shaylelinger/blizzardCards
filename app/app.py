@@ -13,7 +13,7 @@ def getCardMetadata(lookupData, lookupId):
 			if item['id'] == lookupId:
 				return item['name']
 	except Exception as e:
-		abort(500, description=f'Error looking up card metadata: {e}')	
+		abort(500, description='Error looking up card metadata: {0}'.format(e))	
 
 	return None
 
@@ -30,7 +30,7 @@ def getAccessToken():
 		response = requests.post(ACCESS_TOKEN_URL, auth=(client_id, client_secret), data=params)
 		return response.json()['access_token']
 	except Exception as e:
-		abort(500, description=f'Error getting access token: {e}')
+		abort(500, description='Error getting access token: {0}'.format(e))
 
 
 # fetch data from api endpoints and call processData
@@ -38,21 +38,21 @@ def getData():
 	accessToken = getAccessToken()
 
 	# API data URLs
-	CARDS_URL = f'https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=druid%2Cwarlock&manaCost=7%2C8%2C9%2C10&rarity=legendary&sort=id%3Aasc&access_token={accessToken}'
-	METADATA_URL = f'https://us.api.blizzard.com/hearthstone/metadata?locale=en_US&access_token={accessToken}'
+	CARDS_URL = 'https://us.api.blizzard.com/hearthstone/cards?locale=en_US&class=druid%2Cwarlock&manaCost=7%2C8%2C9%2C10&rarity=legendary&sort=id%3Aasc&access_token={0}'.format(accessToken)
+	METADATA_URL = 'https://us.api.blizzard.com/hearthstone/metadata?locale=en_US&access_token={0}'.format(accessToken)
 
 	try:
 		# get data
 		response = requests.get(CARDS_URL)
 		cardData = response.json()
 	except Exception as e:
-		abort(500, description=f'Error getting card data: {e}')	
+		abort(500, description='Error getting card data: {0}'.format(e))	
 
 	try:
 		response = requests.get(METADATA_URL)
 		metadata = response.json()
 	except Exception as e:
-		abort(500, description=f'Error getting metadata: {e}')	
+		abort(500, description='Error getting metadata: {0}'.format(e))	
 
 	return processData(cardData, metadata)
 
