@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/env/python3
 
 import json
 from flask import Flask, Response, render_template, abort
