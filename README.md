@@ -51,10 +51,11 @@ Run command:
 ```
 
 ##### Web app:
-1. Store client ID and client secret in .env file inside /app folder:
+1. Store client ID, client secret and card limit in .env file inside /app folder:
 ```
 BLIZZARD_API_CLIENT_ID='someClientId'
 BLIZZARD_API_CLIENT_SECRET='someClientSecret'
+BLIZZARD_CARD_LIMIT=10
 ```
 
 2. Build Docker image
